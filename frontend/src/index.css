@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #e82127;
+}
+
+body {
+  margin: 0;
+  background: #fafafa;
+  color: #0a0a0a;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --- Character animations --- */
+
+@keyframes char-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.char-idle {
+  animation: char-breathe 3.5s ease-in-out infinite;
+}
+
+@keyframes char-blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+.char-eye {
+  transform-origin: center;
+  animation: char-blink 4.5s ease-in-out infinite;
+}
+.char-eye-delay {
+  animation-delay: 0.15s;
+}
+
+@keyframes char-scan {
+  0%,
+  100% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+.char-thinking-eyes {
+  animation: char-scan 1s ease-in-out infinite;
+}
+
+@keyframes char-pulse-dot {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+.char-pulse {
+  animation: char-pulse-dot 1s ease-in-out infinite;
+}
+
+@keyframes char-talk {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.char-bar {
+  transform-origin: center;
+  animation: char-talk 0.5s ease-in-out infinite;
+}
+.char-bar-1 {
+  animation-delay: 0s;
+}
+.char-bar-2 {
+  animation-delay: 0.12s;
+}
+.char-bar-3 {
+  animation-delay: 0.24s;
+}

@@ -1,0 +1,19 @@
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+*.log
+
+# Environment
+.env
+
+# Vector store
+backend/chroma_db/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Frontend (future)
+frontend/node_modules/
+frontend/dist/
