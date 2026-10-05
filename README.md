@@ -7,6 +7,8 @@ cited from the source document.
 **Status:** working end to end — FastAPI backend plus a React chat UI.
 Runs locally; not deployed.
 
+![AI PDF Study Assistant screenshot](docs/screenshot.png)
+
 ## How It Works
 
 1. **Ingest** — PDF text is extracted per page and split into overlapping chunks
