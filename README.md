@@ -4,8 +4,8 @@ A RAG-based (Retrieval-Augmented Generation) application that lets you upload
 PDFs and ask questions about their content, with answers grounded in and
 cited from the source document.
 
-**Status:** backend complete (upload → ingest → retrieve → generate with
-citations). Frontend not yet built.
+**Status:** working end to end — FastAPI backend plus a React chat UI.
+Runs locally; not deployed.
 
 ## How It Works
 
@@ -30,9 +30,14 @@ citations). Frontend not yet built.
 - **Vector DB:** ChromaDB, local persistence
 - **LLM:** Groq's free-tier API by default (`openai/gpt-oss-20b`); can be
   swapped to a local Ollama model via one env var — see below
-- **Frontend:** not yet built (planned: React + Tailwind)
+- **Frontend:** React (Vite) + Tailwind CSS
 
-## Running the Backend Locally
+## Running Locally
+
+You need Python 3.10+ and Node.js. Run the backend and frontend in two
+separate terminals.
+
+### 1. Backend
 
 ```bash
 cd backend
@@ -62,9 +67,22 @@ Start the server:
 uvicorn main:app --reload
 ```
 
-Open [http://localhost:8000/docs](http://localhost:8000/docs) for the
-interactive Swagger UI — use it to try `/upload` (pick a PDF) and then
-`/query` (paste the returned `doc_id` and ask a question).
+The API runs on [http://localhost:8000](http://localhost:8000). The
+interactive Swagger UI at `/docs` lets you try `/upload` and `/query`
+directly. The first upload downloads the embedding model, so it can take a
+minute.
+
+### 2. Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173), upload a PDF, and ask
+questions. The frontend talks to `http://localhost:8000` by default; set
+`VITE_API_BASE_URL` in `frontend/.env` to point it elsewhere.
 
 ### Switching to local Ollama instead of Groq
 
@@ -96,11 +114,16 @@ No code changes needed.
 - Retrieval quality depends on chunking strategy — very short or very dense
   PDFs may retrieve less relevant chunks.
 - Text-based PDFs only — no OCR for scanned documents yet.
-- No frontend yet; interact via the Swagger UI or direct API calls.
+- Conversation memory is shallow: only the last exchange is sent with each
+  question, which is enough to resolve follow-ups like "tell me more about it".
+- Uploaded documents are never deleted from the local `backend/chroma_db/`
+  folder.
+- Runs locally only; no deployment config included.
 
 ## Future Improvements
 
-- React frontend (upload, chat window, source citations)
 - OCR support for scanned PDFs
 - Multi-document querying
-- Conversation memory across turns
+- Longer conversation memory
+- Automated tests
+- Deployment (e.g. Render + Vercel)
